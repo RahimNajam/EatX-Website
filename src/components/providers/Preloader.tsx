@@ -493,16 +493,24 @@ export default function Preloader({
           <div
             ref={backdropRef}
             aria-hidden
-            className="fixed inset-0 bg-gradient"
+            className="fixed inset-0 overflow-hidden bg-[var(--contact-bg)]"
             style={{ zIndex: Z_BACKDROP }}
-          />
+          >
+            {/* navy -> maroon sweep, same palette as the Contact section */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--contact-bg)] from-30% via-[var(--contact-bg)] via-55% to-[var(--gradient)]" />
+            {/* even dark overlay for depth */}
+            <div className="absolute inset-0 bg-[var(--contact-overlay-dark)]" />
+            {/* primary-tinted glows, bottom-right + faint top-left */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,var(--contact-overlay-glow),transparent_55%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(39,4,12,0.55),transparent_50%)]" />
+          </div>
 
           {/* Small centered box: logo + brand name, no progress indicator.
               Size/radius are plain CSS (via min()) so the very first paint
               already matches the intended shape, before any JS runs. */}
           <div
             ref={boxRef}
-            className="fixed left-1/2 top-1/2 h-[min(165px,42vh)] w-[min(240px,84vw)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[26px] bg-gradient text-white ring-1 ring-white/10 shadow-2xl shadow-black/40"
+            className="fixed left-1/2 top-1/2 h-[min(165px,42vh)] w-[min(240px,84vw)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[26px] border-[1.5px] border-white/10 bg-gradient-to-b from-[var(--contact-card-bg-top)] to-[var(--contact-card-bg-bottom)] text-white shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7),0_0_40px_-10px_var(--contact-card-glow)] backdrop-blur-[16px]"
             style={{ zIndex: Z_BOX, willChange: "opacity, transform" }}
           >
             <div className="pointer-events-none absolute inset-0">
