@@ -93,6 +93,31 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+
+  /* ---------- Contact section ---------- */
+  --contact-bg: #0a1020;
+  --contact-overlay-dark: rgba(0, 0, 0, 0.28);
+  --contact-overlay-glow: rgba(219, 18, 36, 0.16);
+  --contact-field-bg: rgba(13, 26, 46, 0.8);
+  --contact-field-bg-hover: rgba(13, 26, 46, 0.95);
+  --contact-field-ring: rgba(219, 18, 36, 0.08);
+  --contact-card-bg-top: rgba(22, 35, 58, 0.85);
+  --contact-card-bg-bottom: rgba(11, 20, 36, 0.92);
+  --contact-card-glow: rgba(219, 18, 36, 0.25);
+  --contact-icon-bg-top: #1a2437;
+  --contact-icon-bg-bottom: #0e1626;
+  --contact-icon-glow: rgba(219, 18, 36, 0.65);
+  --contact-select-bg: #0d1a2e;
+  --contact-map-bg-1: #1c2a42;
+  --contact-map-bg-2: #101a2c;
+  --contact-map-block: #223250;
+  --contact-map-street-light: #3a4d70;
+  --contact-map-street-strong: #546a92;
+  --contact-map-glow: rgba(219, 18, 36, 0.25);
+  --contact-pin-fill-start: #ff4d5a;
+  --contact-pin-core: #2a2f3a;
+  --contact-pin-inner: #8892a6;
+  --contact-info-card-bg: rgba(11, 20, 36, 0.9);
 }
 
 .dark {

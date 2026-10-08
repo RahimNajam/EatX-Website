@@ -8,10 +8,9 @@ const COLS = [
   {
     title: "Company",
     links: [
-      { label: "About us", href: "#" },
-      { label: "Careers", href: "#" },
+      { label: "About us", href: "#about" },
       { label: "Customer stories", href: "#testimonials" },
-      { label: "Contact", href: "#" },
+      { label: "Contact", href: "#contact" },
     ],
   },
   {

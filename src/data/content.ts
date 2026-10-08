@@ -1,7 +1,6 @@
 import {
   Globe, MonitorSmartphone, CloudCog, Boxes, Users, BarChart3,
-  CreditCard, Truck, Utensils, Receipt, Printer, Smartphone,
-  MessageCircle, Mail, Wallet, QrCode, Bike, Store,
+  CreditCard, Utensils,
   ShoppingBag, ChefHat, PackageCheck, LineChart,
   type LucideIcon,
 } from "lucide-react";
@@ -48,19 +47,16 @@ export const FAQS = [
   { q: "How do I get started?", a: `${PLACEHOLDER} Describe onboarding and support here.` },
 ];
 
-export const ORBIT_ICONS: { icon: LucideIcon; label: string }[] = [
-  { icon: CreditCard, label: "Payments" },
-  { icon: Truck, label: "Delivery" },
-  { icon: Utensils, label: "Kitchen" },
-  { icon: Receipt, label: "Billing" },
-  { icon: Printer, label: "Printers" },
-  { icon: Smartphone, label: "Mobile" },
-  { icon: MessageCircle, label: "WhatsApp" },
-  { icon: Mail, label: "Email" },
-  { icon: Wallet, label: "Wallets" },
-  { icon: QrCode, label: "QR Menu" },
-  { icon: Bike, label: "Riders" },
-  { icon: Store, label: "Outlets" },
+// Integration partner logos shown in the arc slider. Swap these paths for real
+// payment/delivery/POS partner marks once they're available.
+export const ARC_LOGOS: { src: string; label: string }[] = [
+  { src: "/logos/client2.webp", label: "Integration partner" },
+  { src: "/logos/client3.webp", label: "Integration partner" },
+  { src: "/logos/client4.webp", label: "Integration partner" },
+  { src: "/logos/client5.webp", label: "Integration partner" },
+  { src: "/logos/client6.webp", label: "Integration partner" },
+  { src: "/logos/client7.webp", label: "Integration partner" },
+  { src: "/logos/client8.webp", label: "Integration partner" },
 ];
 export const PLATFORM_NODES: {
   icon: LucideIcon;

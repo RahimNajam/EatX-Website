@@ -6,12 +6,13 @@ import { ArrowRight } from "lucide-react";
 import { gsap } from "@/lib/gsap";
 import { scrollToSection } from "@/lib/scrollToSection";
 
-type Variant = "primary" | "dark" | "light";
+type Variant = "primary" | "dark" | "light" | "outline";
 
 const STYLES: Record<Variant, string> = {
   primary: "bg-primary text-white shadow-lg shadow-primary/25",
   dark: "bg-gradient text-white",
   light: "bg-white text-foreground",
+  outline: "border border-primary text-primary hover:bg-primary hover:text-white",
 };
 
 interface ArrowButtonProps {
@@ -54,7 +55,7 @@ export default function ArrowButton({
       onMouseLeave={hide}
       onFocus={show}
       onBlur={hide}
-      className={`inline-flex items-center rounded-full px-6 py-3.5 text-sm font-semibold transition-[filter] hover:brightness-110 ${STYLES[variant]} ${className}`}
+      className={`inline-flex items-center rounded-full px-6 py-3.5 text-sm font-semibold transition hover:brightness-110 ${STYLES[variant]} ${className}`}
     >
       <span className="whitespace-nowrap">{children}</span>
       <span

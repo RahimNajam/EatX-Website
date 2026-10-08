@@ -18,9 +18,9 @@ const NAV_ITEMS: NavItem[] = [
   {
     label: "Company",
     links: [
-      { label: "About us", href: "#" },
+      { label: "About us", href: "#about" },
       { label: "Customer stories", href: "#testimonials" },
-      { label: "Contact", href: "#" },
+      { label: "Contact", href: "#contact" },
     ],
   },
   {
@@ -152,7 +152,7 @@ export default function Navbar() {
         style={{ maxWidth: open ? "100%" : "42rem" }}
       >
         {/* top bar: Menu | Logo | Get Started */}
-        <nav className="grid h-16 grid-cols-3 items-center px-3">
+        <nav className="grid h-16 grid-cols-[auto_1fr_auto] items-center px-3 sm:grid-cols-3">
           <button
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}

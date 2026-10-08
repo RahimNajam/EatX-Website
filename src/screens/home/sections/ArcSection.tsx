@@ -3,7 +3,7 @@ import { PLACEHOLDER } from "@/data/content";
 
 export default function ArcSection() {
   return (
-    <section id="integrations" className="overflow-hidden bg-[#eaeceb]">
+    <section id="integrations" className="overflow-hidden bg-light">
       <div className="mx-auto max-w-6xl px-4 pb-12 ">
         <div data-reveal>
           <ArcSlider>

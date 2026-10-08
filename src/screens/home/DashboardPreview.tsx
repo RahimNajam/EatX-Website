@@ -20,7 +20,7 @@ const MENU = [
 const STATS: { label: string; value: string; icon: LucideIcon; tint: string }[] = [
   { label: "Total Orders", value: "347", icon: ShoppingCart, tint: "bg-purple-500" },
   { label: "Gross Sales", value: "Rs 254,198.50", icon: DollarSign, tint: "bg-blue-600" },
-  { label: "Total Tax", value: "Rs 30,503.82", icon: Receipt, tint: "bg-orange-500" },
+  { label: "Total Tax", value: "Rs 30,503.82", icon: Receipt, tint: "bg-primary" },
   { label: "Discounts", value: "Rs 12,709.92", icon: Tag, tint: "bg-pink-500" },
   { label: "FOC Amount", value: "Rs 2,541.98", icon: Gift, tint: "bg-indigo-500" },
   { label: "Returns", value: "Rs 762.59", icon: Undo2, tint: "bg-red-500" },

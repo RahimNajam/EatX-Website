@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import { ORBIT_ICONS } from "@/data/content";
+import Image from "next/image";
+import { ARC_LOGOS } from "@/data/content";
 import { gsap, useGSAP } from "@/lib/gsap";
 
 export default function ArcSlider({ children }: { children?: React.ReactNode }) {
@@ -82,14 +83,22 @@ export default function ArcSlider({ children }: { children?: React.ReactNode }) 
         {children}
       </div>
 
-      {/* icons */}
-      {ORBIT_ICONS.map(({ icon: Icon, label }) => (
+      {/* logos */}
+      {ARC_LOGOS.map(({ src, label }, i) => (
         <div
-          key={label}
+          key={src}
           data-arc
           title={label}
-          className="absolute left-0 top-0 flex items-center justify-center rounded-full border border-gray-900/10 bg-white text-primary shadow-lg"        >
-          <Icon className="h-1/2 w-1/2" />
+          className="absolute left-0 top-0 flex items-center justify-center overflow-hidden rounded-full border border-gray-900/10 bg-white shadow-lg"
+        >
+          <Image
+            src={src}
+            alt={label}
+            fill
+            sizes="56px"
+            className="object-cover"
+            priority={i === 0}
+          />
         </div>
       ))}
     </div>
