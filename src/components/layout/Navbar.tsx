@@ -193,7 +193,7 @@ export default function Navbar() {
           inert={!open}
         >
           <div className="overflow-hidden">
-            <div className="max-h-[calc(100vh-7.5rem)] overflow-y-auto border-t border-white/10 p-3">
+            <div className="max-h-[calc(100dvh-7.5rem)] overflow-y-auto border-t border-white/10 p-3">
               <div className="grid gap-3 lg:grid-cols-[1fr_1fr_1.1fr]">
 
                 {/* Platform Links */}

@@ -61,7 +61,7 @@ export default function ActionSection() {
                 aria-pressed={active === i}
                 className={`scroll-mt-24 rounded-full px-5 py-2 text-xs font-semibold transition-colors duration-200 ${
                   active === i
-                    ? "bg-primary text-white shadow-md shadow-primary/25"
+                    ? "bg-primary text-white md:shadow-md md:shadow-primary/25"
                     : "bg-white text-gray-600 hover:bg-primary/10 hover:text-primary"
                 }`}
               >

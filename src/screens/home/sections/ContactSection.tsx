@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import ArrowButton from "@/components/ui/ArrowButton";
 import { memo, useCallback, useState, type ChangeEvent, type FormEvent } from "react";
 import {
@@ -250,11 +251,9 @@ const ContactMapCard = memo(function ContactMapCard() {
 
       {/* info card */}
       <div className="absolute inset-x-3 bottom-4 flex min-h-[160px] gap-[10px] rounded-[20px] border border-white/10 bg-[var(--contact-info-card-bg)] p-4 backdrop-blur-md sm:inset-x-4 sm:bottom-5 sm:min-h-[176px] sm:p-6">
-        <div
-          aria-hidden
-          className="hidden h-[104px] w-[104px] shrink-0 rounded-xl bg-cover bg-center sm:block"
-          style={{ backgroundImage: "url('/images/about/about-pos-counter.jpg')" }}
-        />
+        <div aria-hidden className="relative hidden h-[104px] w-[104px] shrink-0 overflow-hidden rounded-xl sm:block">
+          <Image src="/images/about/about-pos-counter.webp" alt="" fill sizes="104px" className="object-cover" />
+        </div>
         <div className="min-w-0 flex-1">
           <p className="flex items-center gap-1.5 text-[16px] font-semibold text-primary">
             <MapPin size={16} fill="currentColor" />
@@ -391,7 +390,7 @@ const ContactForm = memo(function ContactForm() {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="group mt-5 flex h-14 w-full items-center justify-center gap-[10px] rounded-xl bg-primary text-base font-semibold text-white shadow-[0_10px_25px_-8px_rgba(219,18,36,0.5)] transition-[box-shadow,opacity,transform] duration-300 hover:shadow-[0_14px_32px_-8px_rgba(219,18,36,0.65)] active:scale-[0.99] disabled:opacity-70"
+          className="group mt-5 flex h-14 w-full items-center justify-center gap-[10px] rounded-xl bg-primary text-base font-semibold text-white md:shadow-[0_10px_25px_-8px_rgba(219,18,36,0.5)] transition-[box-shadow,opacity,transform] duration-300 md:hover:shadow-[0_14px_32px_-8px_rgba(219,18,36,0.65)] active:scale-[0.99] disabled:opacity-70"
         >
           <Send size={18} strokeWidth={1.8} />
           {status === "sending" ? "Sending..." : "Send Message"}
@@ -432,11 +431,9 @@ export default function ContactSection() {
   return (
     <section id="contact" className="relative isolate overflow-hidden bg-[var(--contact-bg)] text-white">
       {/* background photo */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-30 bg-cover bg-center"
-        style={{ backgroundImage: "url('/images/about/contacbg.jpg')" }}
-      />
+      <div aria-hidden className="absolute inset-0 -z-30">
+        <Image src="/images/about/contact-bg.webp" alt="" fill sizes="100vw" className="object-cover object-center" />
+      </div>
       {/* left-to-right navy gradient so the photo reads on the right, text stays crisp on the left */}
       <div
         aria-hidden

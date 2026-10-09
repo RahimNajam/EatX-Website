@@ -79,7 +79,7 @@ export default function ArcSlider({ children }: { children?: React.ReactNode }) 
       </div> */}
 
       {/* text inside the half circle */}
-      <div className="absolute left-1/2 top-[22%] w-[58%] -translate-x-1/2 text-center">
+      <div className="absolute left-1/2 top-[3%] w-[54%] -translate-x-1/2 text-center sm:top-[22%] sm:w-[58%]">
         {children}
       </div>
 
@@ -97,7 +97,6 @@ export default function ArcSlider({ children }: { children?: React.ReactNode }) 
             fill
             sizes="56px"
             className="object-cover"
-            priority={i === 0}
           />
         </div>
       ))}

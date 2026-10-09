@@ -9,7 +9,9 @@ import { scrollToSection } from "@/lib/scrollToSection";
 type Variant = "primary" | "dark" | "light" | "outline";
 
 const STYLES: Record<Variant, string> = {
-  primary: "bg-primary text-white shadow-lg shadow-primary/25",
+  // red glow from md up only: on phones it reads as bleed (and on Safari 15 the /25
+  // falls back to solid red, since color-mix() is unsupported)
+  primary: "bg-primary text-white md:shadow-lg md:shadow-primary/25",
   dark: "bg-gradient text-white",
   light: "bg-white text-foreground",
   outline: "border border-primary text-primary hover:bg-primary hover:text-white",

@@ -68,7 +68,7 @@ export default function PlatformSection() {
         </div>
 
         {/* Right: image + floating round buttons */}
-        <div data-reveal className="relative mx-auto aspect-[5/4] w-full max-w-xl">
+        <div data-reveal className="relative mx-auto aspect-square w-full max-w-xl sm:aspect-[5/4]">
           <span className="absolute inset-[10%] rounded-full border border-gray-900/10" />
 
           <div className="absolute left-1/2 top-1/2 w-[56%] -translate-x-1/2 -translate-y-1/2 rounded-xl bg-sidebar-primary p-1.5 shadow-2xl">
@@ -87,7 +87,7 @@ export default function PlatformSection() {
               {/* GSAP moves this layer */}
               <div data-float className="cursor-default">
                 {/* CSS hover moves this layer */}
-                <div className="group flex items-center gap-2 sm:gap-3">
+                <div className="group flex flex-col items-center gap-1 text-center sm:flex-row sm:gap-3 sm:text-left">
                   <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-white shadow-lg shadow-black/10 transition duration-300 group-hover:scale-110 group-hover:shadow-xl sm:h-16 sm:w-16">
                     <span
                       className={`flex h-9 w-9 items-center justify-center rounded-full text-white sm:h-12 sm:w-12 ${tone}`}
@@ -95,7 +95,7 @@ export default function PlatformSection() {
                       <Icon size={18} />
                     </span>
                   </span>
-                  <span className="leading-tight transition duration-300 group-hover:translate-x-0.5">
+                  <span className="leading-tight transition duration-300 sm:group-hover:translate-x-0.5">
                     <span className="block text-sm font-semibold text-gray-900">{title}</span>
                     <span className="hidden w-28 text-[11px] text-gray-500 sm:block">{text}</span>
                   </span>

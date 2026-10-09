@@ -31,23 +31,23 @@ const STAT_ICONS: { icon: LucideIcon; tone: string }[] = [
 
 const GALLERY = [
   {
-    src: "/images/about/about1.png",
+    src: "/images/about/about1.webp",
     alt: "eatX POS tablet on a restaurant counter",
   },
   {
-    src: "/images/about/about2.png",
+    src: "/images/about/about2.webp",
     alt: "Chefs working together in a busy restaurant kitchen",
   },
   {
-    src: "/images/about/about3.png",
+    src: "/images/about/about3.webp",
     alt: "Close-up of a hand placing an order on an eatX POS tablet",
   },
   {
-    src: "/images/about/about4.png",
+    src: "/images/about/about4.webp",
     alt: "Close-up of a hand placing an order on an eatX POS tablet",
   },
   {
-    src: "/images/about/about5.png",
+    src: "/images/about/about5.webp",
     alt: "Close-up of a hand placing an order on an eatX POS tablet",
   },
 ];
@@ -306,7 +306,6 @@ export default function AboutSection() {
                     alt={current.alt}
                     fill
                     sizes="(min-width: 1024px) 450px, 90vw"
-                    priority={active === 0}
                     className="select-none object-cover"
                     draggable={false}
                   />
@@ -359,7 +358,7 @@ export default function AboutSection() {
 
             <div className="relative aspect-[16/11] w-full overflow-hidden rounded-tl-[90px] rounded-tr-[28px] rounded-br-[20px] rounded-bl-[44px] shadow-xl">
               <Image
-                src="/images/about/about-owner-photo.jpg"
+                src="/images/about/about-owner-photo.webp"
                 alt="Smiling restaurant staff member using a tablet"
                 fill
                 sizes="(min-width: 1024px) 450px, 90vw"

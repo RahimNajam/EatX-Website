@@ -10,7 +10,7 @@ export default function ArcSection() {
             <span className="inline-block rounded-full border border-gray-900/10 bg-white px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-gray-600 sm:text-xs">
               Integrations
             </span>
-            <h2 className="mt-3 text-lg font-semibold leading-tight tracking-tight text-balance text-gray-900 sm:text-2xl md:text-4xl">
+            <h2 className="mt-2 text-[15px] font-semibold leading-tight sm:mt-3 sm:text-2xl tracking-tight text-balance text-gray-900 md:text-4xl">
               Your entire restaurant stack, fully connected
             </h2>
             <p className="mt-3 hidden text-sm text-gray-600 md:block">

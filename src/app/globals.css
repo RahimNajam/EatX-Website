@@ -262,3 +262,42 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+/* ---------- Preloader failsafe ----------
+   If JS never takes over the server-rendered preloader, fade it out on its own.
+   Preloader.tsx cancels this as soon as it mounts (keep delay = FAILSAFE_MS). */
+@keyframes preloader-failsafe {
+  to { opacity: 0; visibility: hidden; }
+}
+
+.preloader-failsafe {
+  animation: preloader-failsafe 0.5s ease 8s forwards;
+}
+
+/* Page under the server-rendered preloader: hidden until JS takes over, so
+   it can't be seen or scrolled behind the overlay on slow phones. Revealed
+   on its own at the same moment as the failsafe above if JS never arrives. */
+@keyframes preloader-reveal {
+  to { visibility: visible; }
+}
+
+.preloader-pending {
+  visibility: hidden;
+  animation: preloader-reveal 0s 8s forwards;
+}
+
+/* ---------- Safari < 16.2 (no color-mix) ----------
+   Tailwind's fallback for `shadow-primary/NN` is the *solid* primary color,
+   which turns the subtle button glow into a hard red halo on older iPhones
+   and iPads. Give those browsers the intended alpha instead. Unlayered, so it
+   wins over Tailwind's layered utilities. */
+@supports not (color: color-mix(in lab, red, red)) {
+  .shadow-primary\/25,
+  .md\:shadow-primary\/25 {
+    --tw-shadow-color: rgb(219 18 36 / 0.25);
+  }
+
+  .shadow-primary\/30,
+  .md\:shadow-primary\/30 {
+    --tw-shadow-color: rgb(219 18 36 / 0.3);
+  }
+}

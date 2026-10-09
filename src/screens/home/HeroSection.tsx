@@ -55,12 +55,12 @@ export default function HeroSection() {
       {/* Centered content */}
       <div className="mx-auto flex max-w-4xl flex-col items-center px-4 text-center">
         {/* Brand logos trust badge */}
-        <div className="inline-flex items-center gap-4 rounded-full border border-white/15 bg-white/10 py-1.5 pl-2 pr-5 backdrop-blur-md">
-          <div className="flex items-center -space-x-2">
+        <div className="inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/10 py-1.5 pl-2 pr-4 backdrop-blur-md sm:gap-4 sm:pr-5">
+          <div className="flex shrink-0 items-center -space-x-2.5 sm:-space-x-2">
             {BRAND_LOGOS.map((logo) => (
               <div
                 key={logo.name}
-                className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border-2 border-[#042f2c] bg-white"
+                className="relative flex h-7 w-7 items-center justify-center overflow-hidden rounded-full border-2 sm:h-9 sm:w-9 border-[#042f2c] bg-white"
               >
                 <Image
                   src={logo.src}
@@ -119,7 +119,7 @@ export default function HeroSection() {
             alt="eatX merchant dashboard preview"
             width={1024}
             height={572}
-            priority
+            preload
             sizes="(min-width: 1024px) 1024px, 100vw"
             className="h-auto w-full rounded-t-2xl"
           />

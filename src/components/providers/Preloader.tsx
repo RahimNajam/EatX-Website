@@ -43,6 +43,25 @@ const Z_BACKDROP = 9990;
 const Z_CONTENT = 9995;
 const Z_BOX = 9999;
 
+/*
+ * Safety net: the overlay is server-rendered, so if JS never takes over
+ * (blocked dev server on a phone, script error, very slow network) a pure
+ * CSS animation fades it out at this point. Keep in sync with the
+ * `.preloader-failsafe` delay in globals.css.
+ */
+const FAILSAFE_MS = 8000;
+
+/* Don't hold the reveal hostage to slow assets on mobile networks */
+const MAX_LOAD_WAIT_MS = 4000;
+
+/*
+ * Hard ceiling from mount: if the intro/exit timelines haven't finished by
+ * now (rAF paused while the phone tab was backgrounded, battery saver
+ * throttling, a stalled tween), jump them to the end and hand the page back.
+ * Plain setTimeout, so it doesn't depend on GSAP's rAF-driven ticker.
+ */
+const FORCE_FINISH_MS = 15000;
+
 export default function Preloader({
   children,
 }: {
@@ -55,6 +74,27 @@ export default function Preloader({
   const [done, setDone] = useState(false);
 
   useEffect(() => {
+    const content = contentRef.current;
+
+    // JS is in control now: cancel the CSS failsafes and un-hide the page
+    // (the failsafe sits on the backdrop and box, not their wrapper: an
+    // animation on the wrapper would make it a stacking context and trap
+    // their z-indexes)
+    [backdropRef.current, boxRef.current, content].forEach((el) => {
+      if (el) el.style.animation = "none";
+    });
+    if (content) content.style.visibility = "visible";
+
+    /*
+     * JS arrived too late: the CSS failsafe has already (or is about to)
+     * hide the overlay, so skip the intro instead of re-locking the page.
+     * setTimeout, not rAF: rAF doesn't run while a phone tab is backgrounded.
+     */
+    if (performance.now() > FAILSAFE_MS - 500) {
+      const id = window.setTimeout(() => setDone(true), 0);
+      return () => window.clearTimeout(id);
+    }
+
     const prefersReduced = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
     ).matches;
@@ -67,12 +107,26 @@ export default function Preloader({
     html.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
 
+    /*
+     * iOS Safari ignores overflow:hidden for touch scrolling, and
+     * ScrollSmoother gives <body> the full page height, so a finger could
+     * still scroll the page behind the preloader (and the reveal would then
+     * open mid-page). Block the gestures outright while locked.
+     */
+    const blockScroll = (e: Event) => e.preventDefault();
+    window.addEventListener("touchmove", blockScroll, { passive: false });
+    window.addEventListener("wheel", blockScroll, { passive: false });
+
+    // Anything scrolled before JS arrived (or restored by the browser) would
+    // make the reveal open mid-page instead of on the Hero
+    window.scrollTo(0, 0);
+
     const unlockScroll = () => {
       html.style.overflow = previousHtmlOverflow;
       document.body.style.overflow = previousBodyOverflow;
+      window.removeEventListener("touchmove", blockScroll);
+      window.removeEventListener("wheel", blockScroll);
     };
-
-    const content = contentRef.current;
 
     /*
      * While the preloader is active, the real page is pinned to the
@@ -210,14 +264,35 @@ export default function Preloader({
       let windowLoaded = document.readyState === "complete";
       let introDone = false;
       let exited = false;
+      let finished = false;
+      let exitTl: gsap.core.Timeline | undefined;
 
       const onLoad = () => {
         windowLoaded = true;
+        tryExit();
       };
 
       if (!windowLoaded) {
         window.addEventListener("load", onLoad);
       }
+
+      const loadCap = window.setTimeout(onLoad, MAX_LOAD_WAIT_MS);
+
+      /*
+       * Hands the page back. Idempotent, so both the exit timeline and the
+       * watchdog can call it.
+       */
+      const finish = () => {
+        if (finished) return;
+
+        finished = true;
+
+        releaseContent();
+        unlockScroll();
+        ScrollTrigger.refresh();
+
+        setDone(true);
+      };
 
       /*
        * ==========================================
@@ -230,14 +305,8 @@ export default function Preloader({
 
         exited = true;
 
-        const exitTl = gsap.timeline({
-          onComplete: () => {
-            releaseContent();
-            unlockScroll();
-            ScrollTrigger.refresh();
-
-            setDone(true);
-          },
+        exitTl = gsap.timeline({
+          onComplete: finish,
         });
 
         exitTl
@@ -361,11 +430,12 @@ export default function Preloader({
        * ==========================================
        */
 
-      const tryExit = () => {
+      // Event-driven (intro onComplete + window load), no per-frame polling
+      function tryExit() {
         if (introDone && windowLoaded) {
           exit();
         }
-      };
+      }
 
       /*
        * ==========================================
@@ -376,6 +446,7 @@ export default function Preloader({
       const intro = gsap.timeline({
         onComplete: () => {
           introDone = true;
+          tryExit();
         },
       });
 
@@ -470,11 +541,22 @@ export default function Preloader({
         exit();
       }
 
-      const tick = gsap.ticker.add(tryExit);
+      /*
+       * Watchdog: never leave the visitor stuck behind the preloader.
+       */
+      const watchdog = window.setTimeout(() => {
+        intro.progress(1);
+        introDone = true;
+        windowLoaded = true;
+        exit();
+        exitTl?.progress(1);
+        finish();
+      }, FORCE_FINISH_MS);
 
       return () => {
         window.removeEventListener("load", onLoad);
-        gsap.ticker.remove(tick);
+        window.clearTimeout(loadCap);
+        window.clearTimeout(watchdog);
       };
     }, boxRef);
 
@@ -493,7 +575,7 @@ export default function Preloader({
           <div
             ref={backdropRef}
             aria-hidden
-            className="fixed inset-0 overflow-hidden bg-[var(--contact-bg)]"
+            className="preloader-failsafe fixed inset-0 overflow-hidden bg-[var(--contact-bg)]"
             style={{ zIndex: Z_BACKDROP }}
           >
             {/* navy -> maroon sweep, same palette as the Contact section */}
@@ -510,7 +592,7 @@ export default function Preloader({
               already matches the intended shape, before any JS runs. */}
           <div
             ref={boxRef}
-            className="fixed left-1/2 top-1/2 h-[min(165px,42vh)] w-[min(240px,84vw)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[26px] border-[1.5px] border-white/10 bg-gradient-to-b from-[var(--contact-card-bg-top)] to-[var(--contact-card-bg-bottom)] text-white shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7),0_0_40px_-10px_var(--contact-card-glow)] backdrop-blur-[16px]"
+            className="preloader-failsafe fixed left-1/2 top-1/2 h-[min(165px,42vh)] w-[min(240px,84vw)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-[26px] border-[1.5px] border-white/10 bg-gradient-to-b from-[var(--contact-card-bg-top)] to-[var(--contact-card-bg-bottom)] text-white shadow-[0_30px_60px_-20px_rgba(0,0,0,0.7),0_0_40px_-10px_var(--contact-card-glow)] backdrop-blur-[16px]"
             style={{ zIndex: Z_BOX, willChange: "opacity, transform" }}
           >
             <div className="pointer-events-none absolute inset-0">
@@ -551,7 +633,9 @@ export default function Preloader({
       )}
 
       {/* Website: pinned + clipped to the small window until the reveal finishes */}
-      <div ref={contentRef}>{children}</div>
+      <div ref={contentRef} className="preloader-pending">
+        {children}
+      </div>
     </>
   );
 }

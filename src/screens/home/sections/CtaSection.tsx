@@ -171,7 +171,7 @@ export default function PricingSection() {
                     <span
                       className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full transition-all duration-300 ${
                         isSelected
-                          ? "bg-primary text-white shadow-sm shadow-primary/30 scale-100"
+                          ? "bg-primary text-white md:shadow-sm md:shadow-primary/30 scale-100"
                           : "bg-transparent text-neutral-400 group-hover:text-primary scale-90"
                       }`}
                     >
